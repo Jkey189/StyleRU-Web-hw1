@@ -1,0 +1,169 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Айти блог в Стилеру — демо</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../styles/styles.css">
+</head>
+<body>
+  <div class="container">
+    <header class="hero">
+      <div class="hero__badge" aria-label="ru">
+        <img src="../assets/photos/ru.png" alt="ru flag">
+      </div>
+      <h1 class="hero__title">Всем привет, это мой<br> айти блог в Стилеру</h1>
+      <p class="hero__subtitle">Это домашка в рамках Осенней школы по веб‑разработке, которую я обещаю закончить и попасть в бигтех</p>
+      <img class="hero__bg" src="../assets/photos/winter.jpg" alt="winter trees">
+    </header>
+
+    <section class="about card">
+      <h2 class="section-title">Немного обо мне:</h2>
+      <div class="about__row">
+        <img class="about__avatar" id="aboutAvatar" src="https://i.pravatar.cc/96?img=12" alt="avatar">
+        <div class="about__info">
+          <div class="about__name"><span id="aboutName"></span><button class="icon-btn" aria-label="edit">✎</button></div>
+          <dl class="about__list">
+            <div><dt>Место учёбы</dt><dd id="aboutSchool"></dd></div>
+            <div><dt>Возраст</dt><dd id="aboutAge"></dd></div>
+            <div><dt>Увлечения</dt><dd id="aboutHobbies"></dd></div>
+          </dl>
+          </dl>
+        </div>
+      </div>
+    </section>
+
+    <section class="create-post card" id="create-post">
+      <h2 class="section-title">Создать новый пост</h2>
+      <p class="section-note">Применяем навыки логики JS: Form submission + LocalStorage</p>
+      <form id="postForm" autocomplete="off" novalidate>
+        <input id="titleInput" class="input" type="text" placeholder="Название поста">
+        <textarea id="contentInput" class="textarea" placeholder="Начните свой пост..." rows="8"></textarea>
+        <div class="actions">
+          <button class="btn" type="submit">Выложить пост</button>
+        </div>
+      </form>
+    </section>
+
+    <section class="posts" id="posts">
+      <h2 class="section-title">Мои посты</h2>
+      <div class="posts__grid" id="postsGrid" aria-live="polite"></div>
+    </section>
+
+    <footer class="footer">
+      <div class="footer__links">
+        <a class="chip" href="https://t.me/styleruorg" target="_blank" rel="noreferrer">Телеграм Стилеру</a>
+        <a class="chip" href="https://styleru.org/" target="_blank" rel="noreferrer">Сайт Стилеру</a>
+      </div>
+      <p class="footer__copy">Made with love at HSE | Learn HTML, CSS & JavaScript</p>
+    </footer>
+  </div>
+
+  <!-- Profile Edit Modal -->
+  <div id="profileModal" class="modal">
+    <div class="modal__overlay"></div>
+    <div class="modal__content">
+      <div class="modal__header">
+        <h2 class="modal__title">Изменить данные</h2>
+        <button class="modal__close" aria-label="Закрыть">×</button>
+      </div>
+      <form id="profileForm" class="modal__form">
+        <div class="modal__field">
+          <label for="profileName">ФИО</label>
+          <input type="text" id="profileName" class="input" required>
+        </div>
+        <div class="modal__field">
+          <label>Аватар</label>
+          <div class="avatar-selector">
+            <div class="avatar-selector__preview">
+              <img id="avatarPreview" src="" alt="Preview" class="avatar-selector__preview-img">
+              <span class="avatar-selector__preview-placeholder">Выберите аватар</span>
+            </div>
+            <div class="avatar-selector__options">
+              <div class="avatar-selector__tabs">
+                <button type="button" class="avatar-selector__tab active" data-tab="preset">Готовые</button>
+                <button type="button" class="avatar-selector__tab" data-tab="url">URL</button>
+                <button type="button" class="avatar-selector__tab" data-tab="file">Файл</button>
+              </div>
+              
+              <div class="avatar-selector__content" data-content="preset">
+                <div class="avatar-selector__grid">
+                  <button type="button" class="avatar-selector__avatar" data-avatar="https://i.pravatar.cc/96?img=1">
+                    <img src="https://i.pravatar.cc/96?img=1" alt="Avatar 1">
+                  </button>
+                  <button type="button" class="avatar-selector__avatar" data-avatar="https://i.pravatar.cc/96?img=2">
+                    <img src="https://i.pravatar.cc/96?img=2" alt="Avatar 2">
+                  </button>
+                  <button type="button" class="avatar-selector__avatar" data-avatar="https://i.pravatar.cc/96?img=3">
+                    <img src="https://i.pravatar.cc/96?img=3" alt="Avatar 3">
+                  </button>
+                  <button type="button" class="avatar-selector__avatar" data-avatar="https://i.pravatar.cc/96?img=4">
+                    <img src="https://i.pravatar.cc/96?img=4" alt="Avatar 4">
+                  </button>
+                  <button type="button" class="avatar-selector__avatar" data-avatar="https://i.pravatar.cc/96?img=5">
+                    <img src="https://i.pravatar.cc/96?img=5" alt="Avatar 5">
+                  </button>
+                  <button type="button" class="avatar-selector__avatar" data-avatar="https://i.pravatar.cc/96?img=6">
+                    <img src="https://i.pravatar.cc/96?img=6" alt="Avatar 6">
+                  </button>
+                  <button type="button" class="avatar-selector__avatar" data-avatar="https://i.pravatar.cc/96?img=7">
+                    <img src="https://i.pravatar.cc/96?img=7" alt="Avatar 7">
+                  </button>
+                  <button type="button" class="avatar-selector__avatar" data-avatar="https://i.pravatar.cc/96?img=8">
+                    <img src="https://i.pravatar.cc/96?img=8" alt="Avatar 8">
+                  </button>
+                  <button type="button" class="avatar-selector__avatar" data-avatar="https://i.pravatar.cc/96?img=9">
+                    <img src="https://i.pravatar.cc/96?img=9" alt="Avatar 9">
+                  </button>
+                  <button type="button" class="avatar-selector__avatar" data-avatar="https://i.pravatar.cc/96?img=10">
+                    <img src="https://i.pravatar.cc/96?img=10" alt="Avatar 10">
+                  </button>
+                  <button type="button" class="avatar-selector__avatar" data-avatar="https://i.pravatar.cc/96?img=11">
+                    <img src="https://i.pravatar.cc/96?img=11" alt="Avatar 11">
+                  </button>
+                  <button type="button" class="avatar-selector__avatar" data-avatar="https://i.pravatar.cc/96?img=12">
+                    <img src="https://i.pravatar.cc/96?img=12" alt="Avatar 12">
+                  </button>
+                </div>
+              </div>
+              
+              <div class="avatar-selector__content hidden" data-content="url">
+                <input type="url" id="profileAvatarUrl" class="input" placeholder="Вставьте URL изображения">
+              </div>
+              
+              <div class="avatar-selector__content hidden" data-content="file">
+                <input type="file" id="profileAvatarFile" class="input" accept="image/*">
+                <small class="avatar-selector__hint">Выберите изображение с вашего компьютера</small>
+              </div>
+            </div>
+          </div>
+          <input type="hidden" id="profileAvatar" value="">
+        </div>
+        <div class="modal__field">
+          <label for="profileSchool">Место обучения</label>
+          <input type="text" id="profileSchool" class="input" required>
+        </div>
+        <div class="modal__field">
+          <label for="profileAge">Возраст</label>
+          <input type="text" id="profileAge" class="input" min="1" max="150" required>
+        </div>
+        <div class="modal__field">
+          <label for="profileHobbies">Увлечения</label>
+          <input type="text" id="profileHobbies" class="input" required>
+        </div>
+        <div class="modal__actions">
+          <button type="submit" class="btn">Обновить данные</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script src="../scripts/script.js"></script>
+  
+</body>
+</html>
+
+
