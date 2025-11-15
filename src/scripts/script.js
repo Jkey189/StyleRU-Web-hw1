@@ -195,6 +195,20 @@ function closeProfileModal() {
   modal.classList.remove('active');
 }
 
+/**
+ * Render preset avatars from AVATARS array into the grid
+ */
+function renderAvatars() {
+  const grid = document.getElementById('avatarGrid');
+  if (!grid || typeof AVATARS === 'undefined') return;
+  
+  grid.innerHTML = AVATARS.map((avatarUrl, index) => `
+    <button type="button" class="avatar-selector__avatar" data-avatar="${avatarUrl}">
+      <img src="${avatarUrl}" alt="Avatar ${index + 1}">
+    </button>
+  `).join('');
+}
+
 function setupProfileEditing() {
   const btn = document.querySelector('.about .icon-btn');
   const modal = document.getElementById('profileModal');
@@ -233,8 +247,13 @@ function setupProfileEditing() {
   });
   
   // Avatar selector: Preset avatar selection
-  document.querySelectorAll('.avatar-selector__avatar').forEach(avatarBtn => {
-    avatarBtn.addEventListener('click', () => {
+  // Use event delegation since avatars are rendered dynamically
+  const avatarGrid = document.getElementById('avatarGrid');
+  if (avatarGrid) {
+    avatarGrid.addEventListener('click', (e) => {
+      const avatarBtn = e.target.closest('.avatar-selector__avatar');
+      if (!avatarBtn) return;
+      
       const avatarUrl = avatarBtn.dataset.avatar;
       
       // Update selected state
@@ -244,7 +263,7 @@ function setupProfileEditing() {
       // Update preview
       updateAvatarPreview(avatarUrl);
     });
-  });
+  }
   
   // Avatar selector: URL input
   const urlInput = document.getElementById('profileAvatarUrl');
@@ -307,10 +326,40 @@ function setupProfileEditing() {
   });
 }
 
+function validateProfileForm() {
+  let isValid = true;
+
+  const fields = [
+    { id: 'profileName', required: true },
+    { id: 'profileSchool', required: true },
+    { id: 'profileAge', required: true },
+    { id: 'profileHobbies', required: true },
+  ];
+
+  fields.forEach(id => {
+    const field = document.getElementById(id);
+
+    if (field.value.trim() === '') {
+      field.classList.add('error');
+      isValid = false;
+    } else {
+      field.classList.remove('error');
+    }
+  });
+
+  return isValid;
+}
+
 function renderPosts() {
   const grid = document.getElementById('postsGrid');
   const posts = readPosts().sort((a, b) => b.createdAt - a.createdAt);
   if (!grid) return;
+  
+  if (posts.length === 0) {
+    grid.innerHTML = '<p style="color: var(--muted); text-align: center; padding: 40px 20px; margin: 0; grid-column: 1 / -1;">Здесь пока пусто...</p>';
+    return;
+  }
+  
   grid.innerHTML = posts.map((p) => `
     <article class="post-card">
       <div class="post-card__cover"></div>
@@ -407,6 +456,7 @@ function setupForm() {
 // Bootstrap
 setupForm();
 renderPosts();
+renderAvatars();
 
 const savedProfile = readProfile();
 applyProfileToDom(savedProfile || {

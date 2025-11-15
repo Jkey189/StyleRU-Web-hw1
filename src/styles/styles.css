@@ -37,16 +37,17 @@ body {
 }
 
 .section-title {
-  margin: 0 0 36px;
+  /* margin: 0 0 36px; */
+  margin: 0 0 16px;
   font-weight: 800;
   font-size: 28px;
 }
 
-.section-note {
+/* .section-note {
   margin: -8px 0 16px;
   color: var(--muted);
   font-size: 13px;
-}
+} */
 
 .card {
   background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
@@ -81,9 +82,9 @@ body {
   background: rgba(0,0,0,0.45);
   border: 1px solid rgba(255,255,255,0.2);
   backdrop-filter: blur(6px);
-  padding: 6px 10px;
+  padding: 12px 12px;
   border-radius: 10px;
-  font-weight: 700;
+  font-weight:700;
 }
 
 .hero__badge img {
@@ -105,6 +106,7 @@ body {
 }
 
 .hero__title {
+  text-align: center;
   position: relative;
   z-index: 1;
   margin: 0 0 8px;
@@ -114,6 +116,7 @@ body {
 }
 
 .hero__subtitle {
+  text-align: center;
   position: relative;
   z-index: 1;
   margin: 0 0 8px;
@@ -434,10 +437,15 @@ input[type="file"] {
   transition: border-color 0.2s, background-color 0.2s;
 }
 
-.input.error, .textarea.error {
+.error {
   border-color: #ff4444;
   background-color: rgba(255, 68, 68, 0.1);
 }
+
+/* .input.error, .textarea.error {
+  border-color: #ff4444;
+  background-color: rgba(255, 68, 68, 0.1);
+} */
 
 .input {
   margin-bottom: 12px;
